@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hanzy Payment</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#0b1120);
+color:white;
+overflow:hidden;
+}
+
+/* BACKGROUND EFFECT */
+body::before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#1da1f2,transparent 70%);
+top:-150px;
+left:-150px;
+opacity:0.2;
+animation:move 8s infinite alternate;
+}
+
+@keyframes move{
+from{transform:translate(0,0);}
+to{transform:translate(80px,60px);}
+}
+
+/* CARD */
+.card{
+position:relative;
+width:95%;
+max-width:420px;
+padding:35px;
+border-radius:24px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 20px 50px rgba(0,0,0,0.7);
+text-align:center;
+z-index:2;
+animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* LOGO */
+.logo{
+width:80px;
+height:80px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:15px;
+border:3px solid #1da1f2;
+box-shadow:0 0 25px rgba(29,161,242,0.6);
+}
+
+h1{
+font-size:22px;
+font-weight:700;
+}
+
+.subtitle{
+margin-top:6px;
+font-size:13px;
+opacity:0.6;
+}
+
+.divider{
+width:60px;
+height:3px;
+margin:18px auto 28px;
+border-radius:10px;
+background:#1da1f2;
+}
+
+/* BUTTON */
+.btn{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:16px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+color:white;
+background:#1da1f2;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#0ea5e9;
+transform:translateY(-2px);
+}
+
+.btn.active{
+background:#0284c7;
+box-shadow:0 0 20px rgba(29,161,242,0.8);
+}
+
+/* CONTENT */
+.box{
+max-height:0;
+overflow:hidden;
+transition:0.4s ease;
+opacity:0;
+}
+
+.box.show{
+max-height:500px;
+opacity:1;
+margin-top:20px;
+}
+
+.nomor{
+font-size:20px;
+font-weight:700;
+color:#38bdf8;
+margin-bottom:14px;
+letter-spacing:1px;
+}
+
+.note{
+font-size:13px;
+margin-top:10px;
+opacity:0.7;
+}
+
+/* QR PREMIUM */
+.qr-wrapper{
+padding:15px;
+border-radius:20px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 30px rgba(29,161,242,0.3);
+display:inline-block;
+animation:zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn{
+from{transform:scale(0.9);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+.qr{
+width:230px;
+border-radius:15px;
+}
+
+/* BUTTON SMALL */
+.copy-btn, .back-btn{
+padding:10px 18px;
+border-radius:12px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+cursor:pointer;
+margin:8px 5px 0 5px;
+transition:0.3s;
+}
+
+.copy-btn:hover, .back-btn:hover{
+background:rgba(255,255,255,0.25);
+}
+
+/* TOAST */
+.toast{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+padding:10px 20px;
+border-radius:12px;
+font-size:13px;
+opacity:0;
+transition:0.3s;
+}
+
+.toast.show{
+opacity:1;
+}
+
+.footer{
+margin-top:28px;
+font-size:12px;
+opacity:0.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<img src="https://files.catbox.moe/6egf75.jpg" class="logo">
+
+<h1>Hanzy Payment</h1>
+<div class="subtitle">DANA & QRIS Only</div>
+<div class="divider"></div>
+
+<button id="btnDana" class="btn" onclick="showDana()">DANA</button>
+<button id="btnQris" class="btn" onclick="showQris()">QRIS</button>
+
+<div id="danaBox" class="box">
+<div class="nomor">083132642575</div>
+<button class="copy-btn" onclick="copyNomor()">Salin Nomor</button>
+<button class="back-btn" onclick="hideAll()">← Kembali</button>
+<p class="note">Silakan ss setelah pembayaran</p>
+</div>
+
+<div id="qrisBox" class="box">
+<div class="qr-wrapper">
+<img class="qr" src="https://img1.pixhost.to/images/10819/670437842_ochobot.jpg">
+</div>
+<br>
+<button class="back-btn" onclick="hideAll()">← Kembali</button>
+<p class="note">Silakan ss setelah pembayaran</p>
+</div>
+
+<div class="footer">© 2026 Hanzy Official</div>
+</div>
+
+<div id="toast" class="toast">Nomor berhasil disalin</div>
+
+<script>
+const danaBox=document.getElementById('danaBox');
+const qrisBox=document.getElementById('qrisBox');
+const toast=document.getElementById('toast');
+const btnDana=document.getElementById('btnDana');
+const btnQris=document.getElementById('btnQris');
+
+function resetButtons(){
+btnDana.classList.remove('active');
+btnQris.classList.remove('active');
+}
+
+function hideAll(){
+danaBox.classList.remove('show');
+qrisBox.classList.remove('show');
+resetButtons();
+}
+
+function showDana(){
+hideAll();
+danaBox.classList.add('show');
+btnDana.classList.add('active');
+}
+
+function showQris(){
+hideAll();
+qrisBox.classList.add('show');
+btnQris.classList.add('active');
+}
+
+function copyNomor(){
+navigator.clipboard.writeText('083132642575');
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2000);
+}
+</script>
+
+</body>
+  </html>
